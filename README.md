@@ -44,7 +44,7 @@ plot(ufun.xdat, ufun.udat)
 
 ## Colormaps of Solutions
 
-The file 'colormap.jl' produces a colormap of the solution *u(x, t)* to the inviscid Burgers equation for points *(x, t)* defined on [0, 1]*x*[0, *T*]. These solutions are calculated using the minmod slope limiter.
+The file 'colormap.jl' produces a colormap of the solution *u(x, t)* to the inviscid Burgers equation for points *(x, t)* on [0, 1]*x*[0, *T*]. These solutions are calculated using the minmod slope limiter. The first is initialized using *u(x, 0)* = 0.35 + 0.25sin(2&pi;*x*), and the second using *u(x, 0)* = 0.35 + 0.25sin(4&pi;*x*). The remained of the discussion will be done using the former.
 
 ![u(x, t) for u(x, 0) = 0.35 + 0.25sin(2&pi;*x*)](images/colormap.png)
 
@@ -59,13 +59,13 @@ At early times, *u(x)* is still relatively smooth. After a certain amount of tim
 
 ## Pointwise Convergence
 
-To calculate the pointwise convergence, we use equation (4) in [1], with $alpha; = 1/2, and take the binary logarithm of the result, which we call *C(x)*. The value of *C(x)* indicates the pointwise convergence order.
+To calculate the pointwise convergence, we use equation (4) in [1], with &alpha; = 1/2, and take the binary logarithm of the result, which we call *C(x)*. The value of *C(x)* indicates the pointwise convergence order.
 
 The first figure below is *C(x)* at *t = 0.125*, calculated using the linear slope calculator. Before the shocks form, the linear slope calculator gives first order convergence. The two dips are caused by numerical instabilities in the denominator of equation (4) in [1], and are located at the zeros of the derivative of *u(x)*.
 
 ![C(x) at *t = 0.125* using the linear slope calculation](images/conv_linear_0125.png)
 
-The second figure is *C(x)* at *t = 0.125*, calculated using the minmod slope limiter. The behaviour near *x = 0.33* and *x = 0.76* is more drastic than it was for the linear slope calculator. This is caused by (1) the same issue with the denominator mentioned earlier and (2) how the minmod slope limiter behaves near changes in slope. Near smooth zeros, the linear calculation gives a more accurate slope than the minmod limiter, which sets the value to exactly zero.
+The second figure is *C(x)* at *t = 0.125*, calculated using the minmod slope limiter. The behaviour near *x = 0.33* and *x = 0.76* is more drastic than it was for the linear slope calculator. This is caused by a combination of (1) the same issue with the denominator mentioned earlier and (2) how the minmod slope limiter behaves near changes in slope. Near smooth zeros, the linear calculation gives a more accurate slope than the minmod limiter, which sets the value to exactly zero.
 
 ![C(x) at *t = 0.125* using the minmod slope limiter](images/conv_minmod_0125.png)
 
@@ -73,16 +73,8 @@ The third figure is *C(x)* at *t = 0.75*, calculated using the minmod slope limi
 
 ![C(x) at *t = 0.75* using the minmod slope limiter](images/conv_minmod_075.png)
 
-It should be noted that, even in regions where *C(x)* is well-behaved, it only achieves first order convergence. I was unable to find the expected second-order convergence.
+It should be noted that, even in regions where *C(x)* is well-behaved, it only achieves first order convergence. I was unable to find the expected second-order convergence. Meanwhile, the linear slope calculator was too unstable to work at all after shocks form.
 
+## References
 
-
-
-
-
-
-
-
-
-
-
+[1] http://www.csc.kth.se/utbildning/kth/kurser/DN2255/ndiff13/ConvRate.pdf
